@@ -1,0 +1,69 @@
+{
+  "ld_marco": {
+    "leadId": "ld_marco",
+    "durationSec": 67,
+    "language": "Spanish",
+    "summary": "Marco is seeking $45,000 to consolidate credit card debt and fund minor home renovations, with a preferred 60-month term. Annual income around $95,000.",
+    "summaryTail": "Call was conducted in Spanish (prospect's preference). Tone was warm and engaged; no objections raised. Recommended next step: specialist call with a Spanish-speaking rep to walk through qualifying products.",
+    "estimatedIncome": "$95,000 / yr",
+    "transcript": [
+      { "t": 2.1, "who": "agent", "text": "Hi, this is Ada calling from Northline Finance. Am I speaking with Marco Alvarez?" },
+      { "t": 5.8, "who": "user", "text": "Yes, that's me." },
+      { "t": 7.4, "who": "agent", "text": "Great — you just submitted a request on our site. Do you have two minutes to confirm a few details so we can route you to the right specialist?" },
+      { "t": 13.1, "who": "user", "text": "Sure, go ahead." },
+      { "t": 14.8, "who": "agent", "text": "Perfect. First — would you prefer to continue in English or Spanish?" },
+      { "t": 18.9, "who": "user", "text": "Spanish would be ideal, but English is fine for this call." },
+      { "t": 22.0, "who": "agent", "text": "Got it — I'll note Spanish as your preferred language so we can match you with a Spanish-speaking specialist. What amount are you looking to finance?" },
+      { "t": 27.4, "who": "user", "text": "Around forty-five thousand dollars." },
+      { "t": 30.1, "who": "agent", "text": "Forty-five thousand. And what's it for — consolidation, a vehicle, home improvements?" },
+      { "t": 35.2, "who": "user", "text": "It's to consolidate some credit cards and do a few renovations at home." },
+      { "t": 40.8, "who": "agent", "text": "Understood. What repayment term are you considering — 36, 48, or 60 months?" },
+      { "t": 46.3, "who": "user", "text": "Sixty months would work best for me." },
+      { "t": 49.0, "who": "agent", "text": "Perfect. One last question — what's your approximate annual income range?" },
+      { "t": 54.1, "who": "user", "text": "Around ninety-five thousand a year." },
+      { "t": 57.8, "who": "agent", "text": "Excellent, Marco. I have everything I need. A Spanish-speaking specialist will reach out to you in the next few minutes. Have a great day." },
+      { "t": 65.0, "who": "user", "text": "Thanks, you too." }
+    ]
+  },
+  "ld_rebecca": {
+    "leadId": "ld_rebecca",
+    "durationSec": 54,
+    "language": "English",
+    "summary": "Rebecca is refinancing an existing auto loan of approximately $28,000 with ~2 years remaining. Current APR is high; she's looking to cut monthly payment.",
+    "summaryTail": "Call was short and focused. She already has competing offers — recommend prioritizing contact within 24 hours.",
+    "estimatedIncome": "$78,000 / yr",
+    "transcript": [
+      { "t": 2.0, "who": "agent", "text": "Hi Rebecca, this is Ada from Northline. Is now a good time for a quick two-minute qualification?" },
+      { "t": 6.4, "who": "user", "text": "Yeah, that's fine." },
+      { "t": 8.1, "who": "agent", "text": "You mentioned auto refinance — what's the remaining balance on your current loan?" },
+      { "t": 13.0, "who": "user", "text": "Around twenty-eight thousand, with about two years left." },
+      { "t": 18.2, "who": "agent", "text": "And are you happy with your current payment, or looking to lower it?" },
+      { "t": 22.7, "who": "user", "text": "Definitely looking to lower it. The APR is pretty rough." },
+      { "t": 27.0, "who": "agent", "text": "Makes sense. What term length would you consider — 36 or 48 months?" },
+      { "t": 31.5, "who": "user", "text": "Forty-eight works." },
+      { "t": 34.2, "who": "agent", "text": "Got it. One last one — approximate annual income?" },
+      { "t": 38.8, "who": "user", "text": "Seventy-eight thousand." },
+      { "t": 42.0, "who": "agent", "text": "Perfect. I'll route you to a refinance specialist today. Thanks Rebecca." },
+      { "t": 50.0, "who": "user", "text": "Thanks." }
+    ]
+  },
+  "ld_david": {
+    "leadId": "ld_david",
+    "durationSec": 82,
+    "language": "English",
+    "summary": "David is financing a $62,000 home improvement project — kitchen remodel and roof replacement. Has existing mortgage, excellent credit per self-report.",
+    "summaryTail": "Prospect is comparison-shopping. Mentioned two competing quotes. Recommend lead with rate match rather than features.",
+    "estimatedIncome": "$145,000 / yr",
+    "transcript": [
+      { "t": 2.5, "who": "agent", "text": "Hi David, Ada from Northline. Do you have a moment to walk through your application?" },
+      { "t": 7.0, "who": "user", "text": "Sure, go ahead." },
+      { "t": 9.2, "who": "agent", "text": "You're looking at $62,000 for home improvement — can you tell me more?" },
+      { "t": 14.8, "who": "user", "text": "Yeah, kitchen remodel and a new roof. Getting quotes now." },
+      { "t": 20.5, "who": "agent", "text": "Understood. What term are you considering?" },
+      { "t": 24.0, "who": "user", "text": "Sixty months, if the rate is right. I have a couple other offers." },
+      { "t": 30.0, "who": "agent", "text": "Noted. Approximate annual income?" },
+      { "t": 33.5, "who": "user", "text": "Around one forty-five." },
+      { "t": 37.0, "who": "agent", "text": "Thanks. I'll put you in touch with a specialist who can quote competitively." }
+    ]
+  }
+}

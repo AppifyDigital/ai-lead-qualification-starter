@@ -1,0 +1,82 @@
+[
+  {
+    "id": "tm_sofia",
+    "name": "Sofia Ramirez",
+    "initials": "SR",
+    "role": "Senior Loan Specialist",
+    "email": "sofia.ramirez@northline.co",
+    "languages": ["English", "Spanish"],
+    "activeLeads": 7,
+    "status": "available"
+  },
+  {
+    "id": "tm_daniel",
+    "name": "Daniel Cho",
+    "initials": "DC",
+    "role": "Loan Specialist",
+    "email": "daniel.cho@northline.co",
+    "languages": ["English", "Korean"],
+    "activeLeads": 12,
+    "status": "on-call"
+  },
+  {
+    "id": "tm_priya",
+    "name": "Priya Natarajan",
+    "initials": "PN",
+    "role": "Loan Specialist",
+    "email": "priya.natarajan@northline.co",
+    "languages": ["English"],
+    "activeLeads": 9,
+    "status": "available"
+  },
+  {
+    "id": "tm_marcus",
+    "name": "Marcus Webb",
+    "initials": "MW",
+    "role": "Senior Loan Specialist",
+    "email": "marcus.webb@northline.co",
+    "languages": ["English"],
+    "activeLeads": 14,
+    "status": "available"
+  },
+  {
+    "id": "tm_elena",
+    "name": "Elena Fischer",
+    "initials": "EF",
+    "role": "Loan Specialist",
+    "email": "elena.fischer@northline.co",
+    "languages": ["English", "German", "Spanish"],
+    "activeLeads": 10,
+    "status": "away"
+  },
+  {
+    "id": "tm_jordan",
+    "name": "Jordan Hale",
+    "initials": "JH",
+    "role": "Junior Specialist",
+    "email": "jordan.hale@northline.co",
+    "languages": ["English"],
+    "activeLeads": 8,
+    "status": "available"
+  },
+  {
+    "id": "tm_wei",
+    "name": "Wei Zhang",
+    "initials": "WZ",
+    "role": "Loan Specialist",
+    "email": "wei.zhang@northline.co",
+    "languages": ["English", "Mandarin"],
+    "activeLeads": 6,
+    "status": "available"
+  },
+  {
+    "id": "tm_amara",
+    "name": "Amara Okonkwo",
+    "initials": "AO",
+    "role": "Junior Specialist",
+    "email": "amara.okonkwo@northline.co",
+    "languages": ["English"],
+    "activeLeads": 4,
+    "status": "offline"
+  }
+]
