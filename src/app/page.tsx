@@ -24,18 +24,39 @@ export default function LandingPage() {
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const update =
     (k: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement>) =>
       setFormData((f) => ({ ...f, [k]: e.target.value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          zip: formData.zip,
+          amount: Number(formData.amount.replace(/[^0-9]/g, "")),
+          language: "English",
+        }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error ?? `Request failed (${res.status})`);
+      }
       setSubmitted(true);
-    }, 900);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -163,6 +184,12 @@ export default function LandingPage() {
                   </>
                 )}
               </button>
+
+              {error && (
+                <p className="mt-[2px] text-[12px] leading-[1.5] text-red-600">
+                  {error}
+                </p>
+              )}
 
               <p className="mt-[6px] text-[12px] leading-[1.5] text-ink-muted">
                 By submitting, you agree to receive a one-time call from our

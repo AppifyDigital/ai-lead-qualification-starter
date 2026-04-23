@@ -38,6 +38,16 @@ export type TranscriptLine = {
   text: string;
 };
 
+export type ExtractedCallData = {
+  confirmedAmount: number | null;
+  repaymentPeriodMonths: number | null;
+  employmentStatus: string | null;
+  loanPurpose: string | null;
+  qualificationScore: number;
+  recommendedNextAction: string;
+  estimatedIncome: string | null;
+};
+
 export type LeadCall = {
   leadId: string;
   durationSec: number;
@@ -46,4 +56,12 @@ export type LeadCall = {
   summaryTail: string;
   estimatedIncome: string;
   transcript: TranscriptLine[];
+  extracted?: ExtractedCallData | null;
+};
+
+export type RoutingDecision = {
+  leadId: string;
+  assigneeId: string | null;
+  reasoning: string;
+  createdAt: string;
 };

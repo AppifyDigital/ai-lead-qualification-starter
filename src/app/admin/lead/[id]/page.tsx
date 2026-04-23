@@ -8,8 +8,9 @@ import { ScoreRing } from "@/components/admin/score-ring";
 import { SectionTitle } from "@/components/admin/section-title";
 import { Facts } from "@/components/admin/facts";
 import { Transcript } from "@/components/admin/transcript";
-import { getLeadById, getLeadCall, getMemberById, getTeam } from "@/lib/data";
+import { getLatestRouting, getLeadById, getLeadCall, getMemberById, getTeam } from "@/lib/data";
 import { formatAmount, formatRelative } from "@/lib/format";
+import { RealtimeLeads } from "../../_components/realtime-leads";
 
 export async function generateMetadata({
   params,
@@ -32,10 +33,11 @@ export default async function LeadDetailPage({
   const lead = await getLeadById(id);
   if (!lead) notFound();
 
-  const [assignee, call, team] = await Promise.all([
+  const [assignee, call, team, routing] = await Promise.all([
     getMemberById(lead.assigneeId),
     getLeadCall(lead.id),
     getTeam(),
+    getLatestRouting(lead.id),
   ]);
 
   const callDuration = call
@@ -51,6 +53,7 @@ export default async function LeadDetailPage({
 
   return (
     <div className="grid h-screen grid-cols-[220px_1fr] overflow-hidden bg-bg text-ink">
+      <RealtimeLeads leadId={lead.id} />
       <Sidebar />
       <div className="flex min-h-0 min-w-0 flex-col">
         {/* Breadcrumb bar */}
@@ -180,6 +183,17 @@ export default async function LeadDetailPage({
                   Unassigned — {availableMatching.length} available{" "}
                   {lead.language}-speaking rep
                   {availableMatching.length === 1 ? "" : "s"}
+                </div>
+              )}
+
+              {routing && (
+                <div className="mt-3 rounded-[10px] border border-line bg-bg p-3">
+                  <div className="mb-1 font-mono text-[10.5px] tracking-[1px] text-brand-ink uppercase">
+                    Claude · routing reasoning
+                  </div>
+                  <p className="text-[12.5px] leading-[1.55] text-ink">
+                    {routing.reasoning}
+                  </p>
                 </div>
               )}
             </div>
