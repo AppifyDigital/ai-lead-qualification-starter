@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { ExtractedCallData, TranscriptLine } from "@/types";
 
-const MODEL = "claude-sonnet-4-5";
+const MODEL = "claude-sonnet-4-6";
 
 const client = () => new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -48,5 +48,13 @@ export async function analyzeCall(transcript: TranscriptLine[]): Promise<CallAna
     .map((b) => b.text)
     .join("");
 
-  return JSON.parse(text) as CallAnalysis;
+  // Claude occasionally wraps JSON in markdown fences or surrounds it with prose
+  // despite the "Return ONLY the JSON" instruction. Strip fences and extract the
+  // outermost JSON object before parsing so a stray line doesn't blow up the webhook.
+  const stripped = text.replace(/```(?:json)?\s*([\s\S]*?)\s*```/g, "$1").trim();
+  const first = stripped.indexOf("{");
+  const last = stripped.lastIndexOf("}");
+  const jsonSlice = first >= 0 && last > first ? stripped.slice(first, last + 1) : stripped;
+
+  return JSON.parse(jsonSlice) as CallAnalysis;
 }

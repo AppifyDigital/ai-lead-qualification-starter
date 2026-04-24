@@ -89,34 +89,47 @@ export async function POST(request: Request) {
     }
 
     const transcript = normalizeTranscript(payload);
-    const analysis = await analyzeCall(transcript);
+    const duration_sec = payload.message?.durationSeconds
+      ? Math.round(payload.message.durationSeconds)
+      : null;
 
-    const qualifiedScore = Math.max(0, Math.min(100, analysis.extracted.qualificationScore * 10));
-
+    // Save the transcript first so a Claude/JSON parse failure below still leaves
+    // a visible trail in the CRM instead of stranding the row at `in-progress`.
     await sb
       .from("calls")
-      .update({
-        status: "completed",
-        transcript,
-        summary: analysis.summary,
-        summary_tail: analysis.summaryTail,
-        estimated_income: analysis.extracted.estimatedIncome,
-        extracted_data: analysis.extracted,
-        duration_sec: payload.message?.durationSeconds
-          ? Math.round(payload.message.durationSeconds)
-          : null,
-      })
+      .update({ status: "completed", transcript, duration_sec })
       .eq("id", callRow.id);
 
-    await sb
-      .from("leads")
-      .update({
-        stage: "Qualified",
-        score: qualifiedScore,
-        term_months: analysis.extracted.repaymentPeriodMonths,
-        purpose: analysis.extracted.loanPurpose,
-      })
-      .eq("id", callRow.lead_id);
+    let analysis: Awaited<ReturnType<typeof analyzeCall>> | null = null;
+    try {
+      analysis = await analyzeCall(transcript);
+    } catch (err) {
+      console.error("analyzeCall failed; transcript saved, skipping enrichment", err);
+    }
+
+    if (analysis) {
+      const qualifiedScore = Math.max(0, Math.min(100, analysis.extracted.qualificationScore * 10));
+
+      await sb
+        .from("calls")
+        .update({
+          summary: analysis.summary,
+          summary_tail: analysis.summaryTail,
+          estimated_income: analysis.extracted.estimatedIncome,
+          extracted_data: analysis.extracted,
+        })
+        .eq("id", callRow.id);
+
+      await sb
+        .from("leads")
+        .update({
+          stage: "Qualified",
+          score: qualifiedScore,
+          term_months: analysis.extracted.repaymentPeriodMonths,
+          purpose: analysis.extracted.loanPurpose,
+        })
+        .eq("id", callRow.lead_id);
+    }
 
     // Kick off routing — do not await if it's slow; we still want to ack
     // the webhook quickly. But the demo is more legible if we await inline.
