@@ -27,10 +27,10 @@ function getCallId(p: VapiPayload): string | undefined {
 function normalizeTranscript(p: VapiPayload): TranscriptLine[] {
   const msgs = p.message?.artifact?.messages ?? p.message?.messages ?? [];
   return msgs
-    .filter((m) => m.role === "assistant" || m.role === "user")
+    .filter((m) => m.role === "bot" || m.role === "assistant" || m.role === "user")
     .map((m, i) => ({
       t: Number(m.secondsFromStart ?? m.time ?? i * 3),
-      who: m.role === "assistant" ? "agent" : "user",
+      who: m.role === "user" ? "user" : "agent",
       text: m.message ?? "",
     }));
 }

@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { ExtractedCallData, Lead, TeamMember } from "@/types";
 
-const MODEL = "claude-sonnet-4-5";
+const MODEL = "claude-sonnet-4-6";
 
 export type RoutingDecision = {
   assigneeId: string;
@@ -63,7 +63,13 @@ export async function pickAssignee(
     .map((b) => b.text)
     .join("");
 
-  const parsed = JSON.parse(text) as RoutingDecision;
+  // Same defensive extraction as claude.ts — strip fences, pick the outer JSON object.
+  const stripped = text.replace(/```(?:json)?\s*([\s\S]*?)\s*```/g, "$1").trim();
+  const first = stripped.indexOf("{");
+  const last = stripped.lastIndexOf("}");
+  const jsonSlice = first >= 0 && last > first ? stripped.slice(first, last + 1) : stripped;
+
+  const parsed = JSON.parse(jsonSlice) as RoutingDecision;
 
   if (!team.some((m) => m.id === parsed.assigneeId)) {
     throw new Error(`Claude picked unknown assigneeId: ${parsed.assigneeId}`);
