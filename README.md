@@ -4,6 +4,10 @@ An end-to-end demo of an AI-powered lead intake + qualification flow. Built
 for a YouTube video — every piece is inspectable in a single file, no
 enterprise abstractions.
 
+> **The prompt that built this** is in [`PROMPT.md`](./PROMPT.md). Copy it,
+> tweak the stack/data model to your domain, and run it against the `starter`
+> branch (or any UI shell of your own).
+
 ## The flow
 
 ```
