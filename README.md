@@ -4,6 +4,14 @@ An end-to-end demo of an AI-powered lead intake + qualification flow. Built
 for a YouTube video — every piece is inspectable in a single file, no
 enterprise abstractions.
 
+> **This is a starter, not a finished product.** It's intentionally minimal so
+> the core flow (form → AI call → transcript → routing → live CRM) is easy to
+> read top-to-bottom. Fork it, swap the domain (loans → real estate, SaaS,
+> healthcare intake, whatever), add the features your use case needs — auth
+> roles, multi-tenancy, queue workers, CRM integrations, analytics, richer
+> routing logic. Nothing here is load-bearing past the demo; treat it as a
+> jumping-off point.
+
 > **The prompt that built this** is in [`PROMPT.md`](./PROMPT.md). Copy it,
 > tweak the stack/data model to your domain, and run it against the `starter`
 > branch (or any UI shell of your own).
