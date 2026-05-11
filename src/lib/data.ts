@@ -4,10 +4,12 @@ import { supabaseServer } from "@/lib/supabase/server";
 import type {
   Lead,
   LeadCall,
+  LeadDocument,
   TeamMember,
   RoutingDecision,
   TranscriptLine,
   ExtractedCallData,
+  ExtractedDocumentFields,
 } from "@/types";
 
 // Row shapes returned by the Supabase queries below. Kept narrow so a schema
@@ -98,6 +100,47 @@ export const getLeadCall = cache(async (leadId: string): Promise<LeadCall | null
     transcript: r.transcript ?? [],
     extracted: r.extracted_data,
   };
+});
+
+type DocumentRow = {
+  id: string;
+  lead_id: string;
+  doc_type: LeadDocument["docType"];
+  file_path: string;
+  file_name: string;
+  file_size: number | null;
+  status: LeadDocument["status"];
+  extracted_fields: ExtractedDocumentFields | null;
+  parse_error: string | null;
+  uploaded_at: string;
+  parsed_at: string | null;
+  confirmed_at: string | null;
+};
+
+const toDocument = (r: DocumentRow): LeadDocument => ({
+  id: r.id,
+  leadId: r.lead_id,
+  docType: r.doc_type,
+  filePath: r.file_path,
+  fileName: r.file_name,
+  fileSize: r.file_size,
+  status: r.status,
+  extractedFields: r.extracted_fields,
+  parseError: r.parse_error,
+  uploadedAt: r.uploaded_at,
+  parsedAt: r.parsed_at,
+  confirmedAt: r.confirmed_at,
+});
+
+export const getLeadDocuments = cache(async (leadId: string): Promise<LeadDocument[]> => {
+  const sb = await supabaseServer();
+  const { data, error } = await sb
+    .from("documents")
+    .select("*")
+    .eq("lead_id", leadId)
+    .order("uploaded_at", { ascending: false });
+  if (error) throw error;
+  return (data as DocumentRow[]).map(toDocument);
 });
 
 export const getLatestRouting = cache(async (leadId: string): Promise<RoutingDecision | null> => {

@@ -8,9 +8,18 @@ import { ScoreRing } from "@/components/admin/score-ring";
 import { SectionTitle } from "@/components/admin/section-title";
 import { Facts } from "@/components/admin/facts";
 import { Transcript } from "@/components/admin/transcript";
-import { getLatestRouting, getLeadById, getLeadCall, getMemberById, getTeam } from "@/lib/data";
+import {
+  getLatestRouting,
+  getLeadById,
+  getLeadCall,
+  getLeadDocuments,
+  getMemberById,
+  getTeam,
+} from "@/lib/data";
 import { formatAmount, formatRelative } from "@/lib/format";
 import { RealtimeLeads } from "../../_components/realtime-leads";
+import { DocumentsCard } from "./_components/documents-card";
+import { DocumentsList } from "./_components/documents-list";
 
 export async function generateMetadata({
   params,
@@ -33,11 +42,12 @@ export default async function LeadDetailPage({
   const lead = await getLeadById(id);
   if (!lead) notFound();
 
-  const [assignee, call, team, routing] = await Promise.all([
+  const [assignee, call, team, routing, documents] = await Promise.all([
     getMemberById(lead.assigneeId),
     getLeadCall(lead.id),
     getTeam(),
     getLatestRouting(lead.id),
+    getLeadDocuments(lead.id),
   ]);
 
   const callDuration = call
@@ -134,7 +144,7 @@ export default async function LeadDetailPage({
             </section>
 
             {/* Transcript */}
-            <section>
+            <section className="mb-9">
               <div className="mb-[10px] flex items-baseline justify-between">
                 <SectionTitle className="mb-0">Call transcript</SectionTitle>
                 {call && (
@@ -150,6 +160,18 @@ export default async function LeadDetailPage({
                   No transcript recorded.
                 </div>
               )}
+            </section>
+
+            {/* Documents */}
+            <section>
+              <div className="mb-[10px] flex items-baseline justify-between">
+                <SectionTitle className="mb-0">Documents</SectionTitle>
+                <div className="font-mono text-[12px] text-ink-muted">
+                  {documents.length} uploaded
+                </div>
+              </div>
+              <DocumentsCard leadId={lead.id} />
+              <DocumentsList documents={documents} />
             </section>
           </div>
 

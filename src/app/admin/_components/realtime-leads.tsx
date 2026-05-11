@@ -32,6 +32,7 @@ export function RealtimeLeads({ leadId }: { leadId?: string } = {}) {
       .on("postgres_changes", { event: "*", schema: "public", table: "leads", ...leadScope }, refresh)
       .on("postgres_changes", { event: "*", schema: "public", table: "calls", ...childScope }, refresh)
       .on("postgres_changes", { event: "*", schema: "public", table: "routing_decisions", ...childScope }, refresh)
+      .on("postgres_changes", { event: "*", schema: "public", table: "documents", ...childScope }, refresh)
       .subscribe();
 
     return () => {
