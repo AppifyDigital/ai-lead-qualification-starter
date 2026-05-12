@@ -18,6 +18,7 @@ import {
 } from "@/lib/data";
 import { formatAmount, formatRelative } from "@/lib/format";
 import { RealtimeLeads } from "../../_components/realtime-leads";
+import { CopyLinkButton } from "./_components/copy-link-button";
 import { DocumentsCard } from "./_components/documents-card";
 import { DocumentsList } from "./_components/documents-list";
 
@@ -76,6 +77,7 @@ export default async function LeadDetailPage({
             <span className="text-ink">{lead.name}</span>
           </nav>
           <div className="flex items-center gap-2">
+            <CopyLinkButton leadId={lead.id} />
             <button
               type="button"
               className="rounded-[7px] border border-line bg-panel px-3 py-[7px] text-[13px] text-ink"

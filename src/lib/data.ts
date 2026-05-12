@@ -19,6 +19,7 @@ type LeadRow = {
   amount: number; term_months: number | null; language: Lead["language"];
   purpose: string | null; stage: Lead["stage"]; score: number;
   assignee_id: string | null; received_at: string; is_new: boolean;
+  upload_token: string | null;
 };
 
 type CallRow = {
@@ -37,6 +38,7 @@ const toLead = (r: LeadRow): Lead => ({
   amount: r.amount, termMonths: r.term_months ?? 0, language: r.language,
   purpose: r.purpose ?? "", stage: r.stage, score: r.score,
   assigneeId: r.assignee_id, receivedAt: r.received_at, isNew: r.is_new,
+  uploadToken: r.upload_token,
 });
 
 const toTeamMember = (r: TeamRow): TeamMember => ({
@@ -57,6 +59,17 @@ export const getLeads = cache(async (): Promise<Lead[]> => {
 export const getLeadById = cache(async (id: string): Promise<Lead | null> => {
   const sb = await supabaseServer();
   const { data, error } = await sb.from("leads").select("*").eq("id", id).maybeSingle();
+  if (error) throw error;
+  return data ? toLead(data as LeadRow) : null;
+});
+
+export const getLeadByUploadToken = cache(async (token: string): Promise<Lead | null> => {
+  const sb = await supabaseServer();
+  const { data, error } = await sb
+    .from("leads")
+    .select("*")
+    .eq("upload_token", token)
+    .maybeSingle();
   if (error) throw error;
   return data ? toLead(data as LeadRow) : null;
 });

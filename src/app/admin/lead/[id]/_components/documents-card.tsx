@@ -12,7 +12,15 @@ const DOC_TYPES: { value: DocumentType; label: string }[] = [
   { value: "bank_statement", label: "Bank statement" },
 ];
 
-export function DocumentsCard({ leadId }: { leadId: string }) {
+export function DocumentsCard({
+  leadId,
+  mode = "admin",
+  token,
+}: {
+  leadId: string;
+  mode?: "admin" | "lead";
+  token?: string;
+}) {
   const router = useRouter();
   const [docType, setDocType] = useState<DocumentType>("payslip");
   const [file, setFile] = useState<File | null>(null);
@@ -45,7 +53,11 @@ export function DocumentsCard({ leadId }: { leadId: string }) {
       form.append("doc_type", docType);
       form.append("file", file);
 
-      const res = await fetch(`/api/leads/${leadId}/documents`, {
+      const uploadUrl =
+        mode === "admin"
+          ? `/api/leads/${leadId}/documents`
+          : `/api/upload/${token}/documents`;
+      const res = await fetch(uploadUrl, {
         method: "POST",
         body: form,
       });

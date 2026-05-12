@@ -17,6 +17,7 @@ export type Lead = {
   assigneeId: string | null;
   receivedAt: string;
   isNew?: boolean;
+  uploadToken?: string | null;
 };
 
 export type MemberStatus = "available" | "on-call" | "away" | "offline";
